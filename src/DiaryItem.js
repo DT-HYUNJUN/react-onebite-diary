@@ -1,8 +1,8 @@
-export default function DiaryItem({ id, author, content, emotion, created_date, onDelete }) {
-  const handleDelete = () => {
+export default function DiaryItem({ id, author, content, emotion, created_date, onRemove }) {
+  const handleRemove = () => {
     console.log(id)
     if (window.confirm(`${id}번 째 일기를 삭제?`)) {
-      onDelete(id)
+      onRemove(id)
     }
   }
   return (
@@ -13,7 +13,7 @@ export default function DiaryItem({ id, author, content, emotion, created_date, 
         <span className="date">{new Date(created_date).toLocaleString()}</span>
       </div>
       <div className="content">{content}</div>
-      <button onClick={handleDelete}>삭제하기</button>
+      <button onClick={handleRemove}>삭제하기</button>
     </div>
   )
 }
