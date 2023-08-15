@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useRef, useState } from "react"
+import { DiaryDispatchContext } from "./App"
 
-export default React.memo(function DiaryItem({ id, author, content, emotion, created_date, onRemove, onEdit }) {
+export default React.memo(function DiaryItem({ id, author, content, emotion, created_date }) {
+  const {onRemove, onEdit} = useContext(DiaryDispatchContext)
+
   const [isEdit, setIsEdit] = useState(false)
   const [localContent, setLocalState] = useState(content)
-
-  useEffect(() => console.log(`${id} 렌더`))
-
+  
   const localContentInput = useRef()
 
   const handleRemove = () => {
@@ -56,7 +57,6 @@ export default React.memo(function DiaryItem({ id, author, content, emotion, cre
           <button onClick={toggleIsEdit}>수정하기</button>
         </>
       )}
-
     </div>
   )
 })
