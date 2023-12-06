@@ -1,9 +1,9 @@
-import { useContext } from "react"
-import DiaryItem from "./DiaryItem"
-import { DiaryStateContext } from "./App"
+import { useContext } from "react";
+import DiaryItem from "./DiaryItem";
+import { DiaryStateContext } from "./App";
 
 export default function DiaryList() {
-  const diaryList = useContext(DiaryStateContext)
+  const diaryList = useContext(DiaryStateContext);
 
   return (
     <div className="DiaryList">
@@ -15,9 +15,9 @@ export default function DiaryList() {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 DiaryList.defaultProps = {
-  diaryList: []
-}
+  diaryList: [],
+};

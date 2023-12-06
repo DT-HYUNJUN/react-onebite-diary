@@ -1,55 +1,55 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
-import { DiaryDispatchContext } from "./App"
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
 export default React.memo(function DiaryEditor() {
-  const {onCreate} = useContext(DiaryDispatchContext)
+  const { onCreate } = useContext(DiaryDispatchContext);
 
   const [state, setState] = useState({
-    author: '',
-    content: '',
-    emotion: 1
-  })
+    author: "박현준",
+    content: "일기",
+    emotion: 3,
+  });
 
   useEffect(() => {
-    console.log('Diary Editor 렌더')
-  })
+    console.log("Diary Editor 렌더");
+  });
 
-  const authorInput = useRef()
-  const contentInput = useRef()
+  const authorInput = useRef();
+  const contentInput = useRef();
 
   const handleChangeState = (e) => {
     setState({
       ...state,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = () => {
     if (state.author.length < 1) {
-      authorInput.current.focus()
-      return
+      authorInput.current.focus();
+      return;
     }
 
     if (state.content.length < 5) {
-      contentInput.current.focus()
-      return
+      contentInput.current.focus();
+      return;
     }
-    
-    onCreate(state.author, state.content, state.emotion)
+
+    onCreate(state.author, state.content, state.emotion);
     setState({
-      author: '',
-      content: '',
-      emotion: 1
-    })
-    alert('저장 성공')
-  }
+      author: "",
+      content: "",
+      emotion: 1,
+    });
+    alert("저장 성공");
+  };
 
   return (
     <div className="DiaryEditor">
       <h2>오늘의 일기</h2>
       {/* author */}
       <div>
-        <input ref={authorInput} name="author" onChange={handleChangeState} type="text" value={state.author} />
+        <input ref={authorInput} name="author" onChange={handleSubmit} type="text" value={state.author} />
       </div>
       {/* content */}
       <div>
@@ -71,5 +71,5 @@ export default React.memo(function DiaryEditor() {
         <input onClick={handleSubmit} type="submit" value="일기 저장하기" />
       </div>
     </div>
-  )
-})
+  );
+});
