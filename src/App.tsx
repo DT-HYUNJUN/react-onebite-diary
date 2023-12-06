@@ -2,13 +2,37 @@ import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "reac
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
+import { Diary, Res } from "./types";
+
+type Action =
+  | {
+      type: "INIT";
+      data: Diary[];
+    }
+  | {
+      type: "CREATE";
+      data: {
+        id: number;
+        author: string;
+        content: string;
+        emotion: number;
+      };
+    }
+  | {
+      type: "REMOVE";
+      targetId: number;
+    }
+  | {
+      type: "EDIT";
+      targetId: number;
+      newContent: string;
+    };
 
 // state : 상태 변화가 일어나기 전의 state
 // action : 어떤 상태변화를 일으켜야 하는지
-const reducer = (state, action) => {
+const reducer = (state: Diary[], action: Action) => {
   switch (action.type) {
     case "INIT": {
-      console.log(action);
       return action.data;
     }
     case "CREATE": {
@@ -30,9 +54,13 @@ const reducer = (state, action) => {
   }
 };
 
-export const DiaryStateContext = React.createContext();
+export const DiaryStateContext = React.createContext<Diary[] | null>(null);
 
-export const DiaryDispatchContext = React.createContext();
+export const DiaryDispatchContext = React.createContext<{
+  onCreate: (author: string, content: string, emotion: number) => void;
+  onRemove: (targetId: number) => void;
+  onEdit: (targetId: number, newContent: string) => void;
+} | null>(null);
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
@@ -42,7 +70,7 @@ function App() {
   const getData = async () => {
     const res = await fetch("https://jsonplaceholder.typicode.com/comments").then((res) => res.json());
 
-    const initData = res.slice(0, 20).map((it) => {
+    const initData = res.slice(0, 20).map((it: Res) => {
       return {
         author: it.email,
         content: it.body,
@@ -58,7 +86,7 @@ function App() {
     getData();
   }, []);
 
-  const onCreate = useCallback((author, content, emotion) => {
+  const onCreate = useCallback((author: string, content: string, emotion: number) => {
     dispatch({
       type: "CREATE",
       data: { author, content, emotion, id: dataId.current },
@@ -66,11 +94,11 @@ function App() {
     dataId.current += 1;
   }, []);
 
-  const onRemove = useCallback((targetId) => {
+  const onRemove = useCallback((targetId: number) => {
     dispatch({ type: "REMOVE", targetId });
   }, []);
 
-  const onEdit = useCallback((targetId, newContent) => {
+  const onEdit = useCallback((targetId: number, newContent: string) => {
     dispatch({ type: "EDIT", targetId, newContent });
   }, []);
 
