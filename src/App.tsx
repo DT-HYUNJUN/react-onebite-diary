@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
+import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";
 import DiaryList from "./DiaryList";
@@ -61,6 +61,12 @@ export const DiaryDispatchContext = React.createContext<{
   onRemove: (targetId: number) => void;
   onEdit: (targetId: number, newContent: string) => void;
 } | null>(null);
+
+export function useDiaryDispatch() {
+  const dispatch = useContext(DiaryDispatchContext);
+  if (!dispatch) throw new Error("error");
+  return dispatch;
+}
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);

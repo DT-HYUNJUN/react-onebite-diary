@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { DiaryDispatchContext } from "./App";
+import React, { useEffect, useRef, useState } from "react";
+import { useDiaryDispatch } from "./App";
 
 export default React.memo(function DiaryEditor() {
-  const { onCreate } = useContext(DiaryDispatchContext);
+  const dispatch = useDiaryDispatch();
 
   const [state, setState] = useState({
     author: "박현준",
@@ -14,10 +14,10 @@ export default React.memo(function DiaryEditor() {
     console.log("Diary Editor 렌더");
   });
 
-  const authorInput = useRef();
-  const contentInput = useRef();
+  const authorInput = useRef<HTMLInputElement>(null);
+  const contentInput = useRef<HTMLTextAreaElement>(null);
 
-  const handleChangeState = (e) => {
+  const handleChangeState = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -26,16 +26,20 @@ export default React.memo(function DiaryEditor() {
 
   const handleSubmit = () => {
     if (state.author.length < 1) {
-      authorInput.current.focus();
-      return;
+      if (authorInput.current) {
+        authorInput.current.focus();
+        return;
+      }
     }
 
     if (state.content.length < 5) {
-      contentInput.current.focus();
-      return;
+      if (contentInput.current) {
+        contentInput.current.focus();
+        return;
+      }
     }
 
-    onCreate(state.author, state.content, state.emotion);
+    dispatch.onCreate(state.author, state.content, state.emotion);
     setState({
       author: "",
       content: "",
