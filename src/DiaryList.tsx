@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import DiaryItem from "./DiaryItem";
-import { DiaryStateContext } from "./App";
+import { useDiaryState } from "./App";
 
 export default function DiaryList() {
-  const diaryList = useContext(DiaryStateContext);
+  const diaryList = useDiaryState();
 
   return (
     <div className="DiaryList">

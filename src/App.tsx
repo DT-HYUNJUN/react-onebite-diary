@@ -64,8 +64,14 @@ export const DiaryDispatchContext = React.createContext<{
 
 export function useDiaryDispatch() {
   const dispatch = useContext(DiaryDispatchContext);
-  if (!dispatch) throw new Error("error");
+  if (!dispatch) throw new Error("dispatch error");
   return dispatch;
+}
+
+export function useDiaryState() {
+  const state = useContext(DiaryStateContext);
+  if (!state) throw new Error("state error");
+  return state;
 }
 
 function App() {
