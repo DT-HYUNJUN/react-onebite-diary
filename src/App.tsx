@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useRef } from "react";
 import "./App.css";
 import DiaryEditor from "./DiaryEditor";

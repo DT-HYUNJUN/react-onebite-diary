@@ -25,18 +25,14 @@ export default React.memo(function DiaryEditor() {
   };
 
   const handleSubmit = () => {
-    if (state.author.length < 1) {
-      if (authorInput.current) {
-        authorInput.current.focus();
-        return;
-      }
+    if (authorInput.current && state.author.length < 1) {
+      authorInput.current.focus();
+      return;
     }
 
-    if (state.content.length < 5) {
-      if (contentInput.current) {
-        contentInput.current.focus();
-        return;
-      }
+    if (contentInput.current && state.content.length < 5) {
+      contentInput.current.focus();
+      return;
     }
 
     dispatch.onCreate(state.author, state.content, state.emotion);
